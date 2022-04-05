@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class UserComments:IEntity
+    public class UserComment:IEntity
     {
         public int Id { get; set; }
         public int cUserId { get; set; }
