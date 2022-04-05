@@ -27,5 +27,15 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
+
+        public IDataResult<User> GetByTc(string tc)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Tc == tc));
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+        }
     }
 }

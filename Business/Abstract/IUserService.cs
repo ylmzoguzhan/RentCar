@@ -12,5 +12,7 @@ namespace Business.Abstract
     {
         IDataResult<List<User>> GetAll();
         IResult Add(User user);
+        IDataResult<List<OperationClaim>> GetClaims(User user);
+        IDataResult<User> GetByTc(string tc);
     }
 }

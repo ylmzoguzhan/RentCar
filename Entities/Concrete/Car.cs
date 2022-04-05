@@ -18,7 +18,7 @@ namespace Entities.Concrete
         public int GearId { get; set; }
         public decimal DailyPrice { get; set; }
         public bool Rent { get; set; }
-        public double Lnt { get; set; }
+        public double Lat { get; set; }
         public double Lng { get; set; }
     }
 }

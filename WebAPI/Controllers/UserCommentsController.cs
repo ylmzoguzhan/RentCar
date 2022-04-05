@@ -10,9 +10,9 @@ namespace WebAPI.Controllers
     public class UserCommentsController : ControllerBase
     {
         IUserCommentService _userCommentService;
-        public UserCommentsController(IUserCommentService _userCommentService)
+        public UserCommentsController(IUserCommentService userCommentService)
         {
-            _userCommentService = _userCommentService;
+            _userCommentService = userCommentService;
         }
         [HttpGet("getall")]
         public IActionResult GetAll()
