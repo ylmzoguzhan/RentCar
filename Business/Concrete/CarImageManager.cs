@@ -17,7 +17,7 @@ namespace Business.Concrete
         {
             _carImageDal = carImageDal;
         }
-        public IResult AddCarImage(CarImage carImage)
+        public IResult Add(CarImage carImage)
         {
             _carImageDal.Add(carImage);
             return new SuccessResult("Araç resim eklendi");

@@ -11,6 +11,6 @@ namespace Business.Abstract
     public interface ICarImageService
     {
         IDataResult<List<CarImage>> GetAll();
-        IResult AddCarImage(CarImage carImage);
+        IResult Add(CarImage carImage);
     }
 }
