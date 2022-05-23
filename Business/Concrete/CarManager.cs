@@ -28,8 +28,13 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            _securedTool.Secured("Admin");
+            //_securedTool.Secured("Admin");
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
+        }
+
+        public IDataResult<Car> GetById(int id)
+        {
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
     }
 }

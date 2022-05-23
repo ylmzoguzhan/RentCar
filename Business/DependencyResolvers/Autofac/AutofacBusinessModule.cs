@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.FileHelper;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
@@ -26,22 +27,14 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
-
-            builder.RegisterType<CarCommentManager>().As<ICarCommentService>();
-            builder.RegisterType<EfCarCommentDal>().As<ICarCommentDal>();
-
-            builder.RegisterType<CarImageManager>().As<ICarImageService>();
-            builder.RegisterType<EfCarImageDal>().As<ICarImageDal>();
-
-            builder.RegisterType<UserCommentManager>().As<IUserCommentService>();
-            builder.RegisterType<EfUserCommentDal>().As<IUserCommentDal>();
-
-            builder.RegisterType<UserImageManager>().As<IUserImageService>();
-            builder.RegisterType<EfUserImageDal>().As<IUserImageDal>();
             
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            builder.RegisterType<FileHelper>().As<IFileHelper>();
+
+            builder.RegisterType<CarImageManager>().As<ICarImageService>();
+            builder.RegisterType<EfCarImageDal>().As<ICarImageDal>();
 
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
 

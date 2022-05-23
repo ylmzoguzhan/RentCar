@@ -15,15 +15,12 @@ namespace DataAccess.Concrete
         {
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-BG3USV1;Database=Test;Trusted_Connection=true");
         }
-        public DbSet<CarComment> CarComments { get; set; }
-        public DbSet<CarImage> CarImages { get; set; }
-        public DbSet<UserImage> UserImages { get; set; }
-        public DbSet<UserComment> UserComments { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Gear> Gears { get; set; }
         public DbSet<Rent> Rents { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<CarImage> CarImages { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
     }
