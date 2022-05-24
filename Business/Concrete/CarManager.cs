@@ -3,6 +3,7 @@ using Core.CrossCuttingConcerns.Secured;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,12 @@ namespace Business.Concrete
             return new SuccessResult("Araç eklendi");
         }
 
+        public IResult Update(Car car)
+        {
+            _carDal.Update(car);
+            return new SuccessResult("Güncellendi");
+        }
+
         public IDataResult<List<Car>> GetAll()
         {
             //_securedTool.Secured("Admin");
@@ -35,6 +42,16 @@ namespace Business.Concrete
         public IDataResult<Car> GetById(int id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
+        }
+
+        public IDataResult<List<CarDetailsDto>> GetCarDetails()
+        {
+            return new SuccessDataResult<List<CarDetailsDto>>(_carDal.GetListCarDetail());
+        }
+
+        public IDataResult<List<CarDetailsDto>> GetCarDetailsByRent()
+        {
+            return new SuccessDataResult<List<CarDetailsDto>>(_carDal.GetListCarDetailByRent());
         }
     }
 }

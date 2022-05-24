@@ -8,51 +8,46 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.FileHelper
 {
-    public class FileHelper: IFileHelper
+    public class FileHelper
     {
         static string _basePath = Directory.GetCurrentDirectory() + "/wwwroot/";
-        static string _imageFolder = "images/";
-        string _fullPath = _basePath + _imageFolder;
+        static string _folder = "images/";
 
 
-        public string Add(IFormFile file)
+        public static string Upload(IFormFile file)
         {
-            CreateDirectory(_fullPath);
+            if (!Directory.Exists(_basePath + _folder)) Directory.CreateDirectory(_basePath + _folder);
 
-            var fileExtension = Path.GetExtension(file.FileName);
+            string extension = Path.GetExtension(file.FileName);
+            CheckImage(extension);
 
-            var imagePath = _imageFolder + Guid.NewGuid().ToString() + fileExtension;
+            string imagePath = _folder + Guid.NewGuid().ToString() + extension;
 
-            CreateFile(file, _basePath + imagePath);
-
-            return imagePath;
-        }
-
-        public void Delete(string filePath)
-        {
-            File.Delete(_basePath + filePath);
-        }
-
-        public string Update(IFormFile file, string oldFilePath)
-        {
-            Delete(oldFilePath);
-            return Add(file);
-        }
-
-        private void CreateDirectory(string path)
-        {
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-        }
-
-
-
-        private void CreateFile(IFormFile file, string path)
-        {
-            using (FileStream fileStream = File.Create(path))
+            using (FileStream fileStream = File.Create(_basePath + imagePath))
             {
                 file.CopyTo(fileStream);
                 fileStream.Flush();
+                return imagePath;
             }
+        }
+
+        public static string Update(string oldImagePath, IFormFile file)
+        {
+            Delete(oldImagePath);
+            return Upload(file);
+        }
+
+        public static void Delete(string imagePath)
+        {
+            File.Delete(_basePath + imagePath);
+        }
+
+        private static void CheckImage(string extension)
+        {
+            var extensions = new List<string> { ".jpg", ".png", "jpeg" };
+
+            if (!extensions.Contains(extension))
+                throw new Exception();
         }
     }
 }

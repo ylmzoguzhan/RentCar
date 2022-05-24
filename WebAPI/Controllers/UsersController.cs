@@ -34,5 +34,15 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("getbytc")]
+        public IActionResult GetByTc(string tc)
+        {
+            var result = _userService.GetByTc(tc);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
     }
 }

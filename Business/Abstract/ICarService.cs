@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace Business.Abstract
     {
         IDataResult<List<Car>> GetAll();
         IResult Add(Car car);
+        IResult Update(Car car);
         IDataResult<Car> GetById(int id);
+        IDataResult<List<CarDetailsDto>> GetCarDetails();
+        IDataResult<List<CarDetailsDto>> GetCarDetailsByRent();
+
     }
 }

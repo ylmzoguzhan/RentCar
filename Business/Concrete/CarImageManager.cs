@@ -14,61 +14,66 @@ namespace Business.Concrete
 {
     public class CarImageManager: ICarImageService
     {
-        string _defaultImagePath = "images/default.png";
 
         ICarImageDal _carImageDal;
-        IFileHelper _fileHelper;
-        public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper)
+        public CarImageManager(ICarImageDal carImageDal)
         {
             _carImageDal = carImageDal;
-            _fileHelper = fileHelper;
         }
 
-        
+
+
         public IResult Add(int carId, IFormFile file)
         {
 
-            var carImage = new CarImage
+            CarImage carImage = new CarImage
             {
                 CarId = carId,
-                Date = DateTime.Now,
-                ImagePath = _fileHelper.Add(file)
+                ImagePath = FileHelper.Upload(file),
+                Date = DateTime.Now
             };
+
             _carImageDal.Add(carImage);
             return new SuccessResult("eklendi");
         }
 
-        
+        public IDataResult<List<CarImage>> getAll()
+        {
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
+        }
+
         public IResult Delete(int id)
         {
             var carImage = _carImageDal.Get(ci => ci.Id == id);
-            _fileHelper.Delete(carImage.ImagePath);
+            if (carImage == null) return new ErrorResult("yok");
+
+            FileHelper.Delete(carImage.ImagePath);
 
             _carImageDal.Delete(carImage);
             return new SuccessResult("silindi");
         }
 
-        public IDataResult<List<CarImage>> GetAll()
-        {
-            var result = _carImageDal.GetAll();
-            return new SuccessDataResult<List<CarImage>>("listelendi", result);
-        }
-
-        public IDataResult<List<CarImage>> GetAllByCarId(int carId)
+        public IDataResult<List<CarImage>> GetByCarId(int carId)
         {
             var result = _carImageDal.GetAll(ci => ci.CarId == carId);
-            if (result.Count == 0) result.Add(new CarImage { ImagePath = _defaultImagePath });
+
             return new SuccessDataResult<List<CarImage>>("getirildi",result);
         }
 
-        
         public IResult Update(int id, IFormFile file)
         {
             var carImage = _carImageDal.Get(ci => ci.Id == id);
-            carImage.ImagePath = _fileHelper.Update(file, carImage.ImagePath);
+            if (carImage == null) return new ErrorResult("yok");
+
+            carImage.ImagePath = FileHelper.Update(carImage.ImagePath, file);
 
             _carImageDal.Update(carImage);
-            return new SuccessResult("güncellendi");
+            return new SuccessResult("Güncellendi");
+        }
+
+        public IDataResult<CarImage> GetPathById(int id)
+        {
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.CarId == id));
         }
     }
 }

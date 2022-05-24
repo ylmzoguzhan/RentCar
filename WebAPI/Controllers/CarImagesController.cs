@@ -42,22 +42,37 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getAllByCarId")]
-        public IActionResult GetAllByCarId(int carId)
+        [HttpGet("getbycarid")]
+        public IActionResult GetByCarId(int carId)
         {
-            var result = _carImageService.GetAllByCarId(carId);
-            if (!result.Success) return BadRequest(result);
-
+            var result = _carImageService.GetByCarId(carId);
+            if (!result.Success) 
+            { 
+                return BadRequest(result.Message);
+            }
             return Ok(result);
         }
-
-        [HttpGet("getAll")]
+        [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _carImageService.GetAll();
-            if (!result.Success) return BadRequest(result);
-
-            return Ok(result);
+            var result = _carImageService.getAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
+        [HttpGet("getpathbycarid")]
+        public IActionResult GetPathByCarId(int id)
+        {
+            var result = _carImageService.GetPathById(id);
+            if (result.Success)
+            {
+                return Ok(result.Data.ImagePath);
+            }
+            return BadRequest(result);
+        }
+
+
     }
 }

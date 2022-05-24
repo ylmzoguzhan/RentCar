@@ -31,10 +31,11 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
-            builder.RegisterType<FileHelper>().As<IFileHelper>();
-
             builder.RegisterType<CarImageManager>().As<ICarImageService>();
             builder.RegisterType<EfCarImageDal>().As<ICarImageDal>();
+
+            builder.RegisterType<CoordManager>().As<ICoordService>();
+            builder.RegisterType<EfCoordDal>().As<ICoordDal>();
 
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
 
