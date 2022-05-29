@@ -69,5 +69,34 @@ namespace DataAccess.Concrete
                 return result.ToList();
             }
         }
+
+        public CarDetailsDto GetCarDetailCarId(int id)
+        {
+            using (var context = new RentCarContext())
+            {
+                var result = from car in context.Cars
+
+                             join brand in context.Brands
+                             on car.BrandId equals brand.Id
+
+                             join gear in context.Gears
+                             on car.GearId equals gear.Id
+                             where (car.Id == id )
+                             select new CarDetailsDto
+                             {
+                                 Rent = car.Rent,
+                                 CarId = car.Id,
+                                 Brand = brand.Name,
+                                 Model = car.Model,
+                                 Year = car.Year,
+                                 Capacity = car.Capacity,
+                                 DailyPrice = car.DailyPrice,
+                                 Lat = car.Lat,
+                                 Lng = car.Lng,
+                                 Gear = gear.Name
+                             };
+                return result.First();
+            }
+        }
     }
 }

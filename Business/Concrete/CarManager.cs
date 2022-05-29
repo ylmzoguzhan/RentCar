@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Secured;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -23,6 +25,8 @@ namespace Business.Concrete
         }
         public IResult Add(Car car)
         {
+            _securedTool.Secured("Admin");
+            ValidationTool.Validate(new CarValidator(),car);
             _carDal.Add(car);
             return new SuccessResult("Araç eklendi");
         }
@@ -35,7 +39,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            //_securedTool.Secured("Admin");
+            
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
@@ -51,7 +55,13 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailsDto>> GetCarDetailsByRent()
         {
+            //_securedTool.Secured("Admin");
             return new SuccessDataResult<List<CarDetailsDto>>(_carDal.GetListCarDetailByRent());
+        }
+
+        public IDataResult<CarDetailsDto> GetCarDetailsByCarId(int id)
+        {
+            return new SuccessDataResult<CarDetailsDto>(_carDal.GetCarDetailCarId(id));
         }
     }
 }

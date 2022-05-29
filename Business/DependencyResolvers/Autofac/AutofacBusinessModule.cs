@@ -37,6 +37,12 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CoordManager>().As<ICoordService>();
             builder.RegisterType<EfCoordDal>().As<ICoordDal>();
 
+            builder.RegisterType<BrandManager>().As<IBrandService>();
+            builder.RegisterType<EfBrandDal>().As<IBrandDal>();
+
+            builder.RegisterType<GearManager>().As<IGearService>();
+            builder.RegisterType<EfGearDal>().As<IGearDal>();
+
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
 
         }
